@@ -8,6 +8,7 @@ from flask_wtf import FlaskForm, CSRFProtect
 from flask_wtf.csrf import CSRFError
 from wtforms import StringField, PasswordField, SubmitField
 from wtforms.validators import DataRequired
+from redis import Redis
 from ldap3 import Server, Connection, ALL, SUBTREE, Tls
 from functools import wraps
 from dataclasses import dataclass, field, asdict
@@ -27,6 +28,12 @@ SESSION_TIMEOUT_SECONDS = 3600
 
 # Init Flask app
 app = Flask(__name__)
+
+# Server side sessions
+app.config['SESSION_TYPE'] = 'redis'
+app.config['SESSION_REDIS'] = Redis.from_url(REDIS_URL)
+Session(app)
+
 if os.environ['FLASK_ENV'] == 'development':
     app.secret_key = 'REPLACE_WITH_SECURE_SECRET'
     app.debug = True
