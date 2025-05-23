@@ -199,6 +199,7 @@ def login():
         password = form.password.data
         user = ldap_login(username, password)
         if user.authenticated:
+            app.session_interface.regenerate(session)
             session["username"] = user.username
             session["password"] = user.password
             session["roles"] = user.roles
