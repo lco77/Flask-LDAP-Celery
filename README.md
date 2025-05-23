@@ -5,7 +5,7 @@ Flask boilerplate aiming at simplicity:
 - LDAP authentication with group to role mapping (typically for use with Active Directory)
 - Celery integration to offload long running tasks
 - Clear UI versus API separation
-- Client-side sessions
+- Server-side sessions using Redis
 - Minimalist Bootstrap frontend using JQuery only
 - Support for Dark/Light theme
 
