@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+
+{% block title %}Device{% endblock %}
+
+{% block content %}
+
+<h2>Device</h2>
+
+
+<!-- FORM -->
+<div>
+    <form method="POST">
+        {{ form.hidden_tag() }}
+        <p>
+            {{ form.hostname.label }}<br>
+            {{ form.hostname(size=32) }}
+        </p>
+        <p>{{ form.submit() }}</p>
+    </form>
+</div>
+
+<!-- FORM RESULT-->
+<div>
+    {% if error %}
+    <p>❌ {{ error }}</p>
+    {% endif %}
+
+    {% if device %}
+    <ul>
+        <li>Hostname: {{ device.hostname }}</li>
+        <li>IP Address: {{ device.ip_address }}</li>
+    </ul>
+
+    <button id="run_task">Run CMD</button>
+
+    <div id="status"></div>
+    
+    {% endif %}
+</div>
+
+
+
+{% endblock %}
+
+
+{% block script %}
+{% if device %}
+<script>
+    const pollInterval = 2000;
+    const ip = "{{ device.ip_address }}";
+    const statusDiv = document.getElementById("status");
+    const createTaskUrl = "{{ url_for('api.create_task') }}";
+    const getTaskUrl = "{{ url_for('api.get_task', task_id='__TASK_ID__') }}";
+
+    $(document).ready(function () {
+        $('#run_task').click(function (e) {
+            startTask(createTaskUrl, "sh_int_desc", { ip_address: ip }, statusDiv);
+        })
+    })
+
+</script>
+{% endif %}
+{% endblock %}

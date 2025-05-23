@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% block title %}Login{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-center align-items-center" style="height: 100vh;">
+    <div class="card border-primary mb-3" style="max-width: 20rem;">
+        <div class="card-body">
+
+            <form method="POST">
+                {{ form.hidden_tag() }}
+                <p>
+                    {{ form.username.label }}<br>
+                    {{ form.username(size=32) }}
+                </p>
+                <p>
+                    {{ form.password.label }}<br>
+                    {{ form.password(size=32) }}
+                </p>
+                <p class="text-center">{{ form.submit() }}</p>
+                {% if error %}
+                <p class="text-center text-danger">{{ error }}</p>
+                {% else %}
+                <p class="text-center text-body">&nbsp;</p>
+                {% endif %}
+            </form>
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}
